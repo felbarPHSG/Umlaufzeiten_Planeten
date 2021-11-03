@@ -40,6 +40,7 @@ def setup():
     
 def draw():
     background(10,10,45)
+    speed = pow(mouseX/(0.5*displayWidth), 2)*3
     global angle_merkur
     global angle_venus
     global angle_erde
@@ -72,31 +73,31 @@ def draw():
     strokeWeight(size_merkur/6)
     fill(115,63,18)
     ellipse(x_merkur, y_merkur, size_merkur, size_merkur)
-    angle_merkur += PI/88
+    angle_merkur += (PI/88)*speed
     
     #Venus
     strokeWeight(size_venus/6)
     fill(191,112,42)
     ellipse(x_venus, y_venus, size_venus, size_venus)
-    angle_venus += PI/225
+    angle_venus += (PI/225)*speed
     
     #Erde
     strokeWeight(size_erde/6)
     fill(44,108,191)
     ellipse(x_erde, y_erde, size_erde, size_erde)
-    angle_erde += PI/365   
+    angle_erde += (PI/365)*speed 
         
     #Mars
     strokeWeight(size_mars/6)
     fill(191,69,57)
     ellipse(x_mars, y_mars, size_mars, size_mars)
-    angle_mars += PI/687
+    angle_mars += (PI/687)*speed
     
     #Jupiter
     strokeWeight(size_jupiter/6)
     fill(140,128,112)
     ellipse(x_jupiter, y_jupiter, size_jupiter, size_jupiter)
-    angle_jupiter += PI/4330
+    angle_jupiter += (PI/4330)*speed
     
     #Saturn
     strokeWeight(size_saturn/6)
@@ -104,4 +105,4 @@ def draw():
     ellipse(x_saturn, y_saturn, size_saturn, size_saturn)
     strokeWeight(size_saturn/4)
     arc(x_saturn, y_saturn, size_saturn*1.5, size_saturn/3, -QUARTER_PI, PI+QUARTER_PI)
-    angle_saturn += PI/10585
+    angle_saturn += (PI/10585)*speed

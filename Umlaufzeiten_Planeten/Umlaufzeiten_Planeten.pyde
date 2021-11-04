@@ -9,6 +9,7 @@ size_erde = displayWidth/130
 size_mars = displayWidth/155
 size_jupiter = displayWidth/100
 size_saturn = displayWidth/110
+a = -1
 
 # Vektorenpunkte der Himmelskörper bestimmen
 v_sonne = PVector(displayWidth/2, displayHeight/2)
@@ -46,7 +47,19 @@ def draw():
     global angle_erde
     global angle_mars
     global angle_jupiter
-    global angle_saturn
+    global angle_saturn    
+    
+    #Umlaufbahnen
+    if a == 1:
+        noFill()
+        stroke(255,60)
+        strokeWeight(displayWidth/300)
+        ellipse(v_sonne[0], v_sonne[1], radius_merkur*1.2, radius_merkur)
+        ellipse(v_sonne[0], v_sonne[1], radius_venus*1.2, radius_venus)
+        ellipse(v_sonne[0], v_sonne[1], radius_erde*1.2, radius_erde)
+        ellipse(v_sonne[0], v_sonne[1], radius_mars*1.2, radius_mars)
+        ellipse(v_sonne[0], v_sonne[1], radius_jupiter*1.2, radius_jupiter)
+        ellipse(v_sonne[0], v_sonne[1], radius_saturn*1.2, radius_saturn)    
     
     #Positionierung
     x_merkur = v_sonne[0] + sin(angle_merkur)*(radius_merkur*1.2)
@@ -106,3 +119,8 @@ def draw():
     strokeWeight(size_saturn/4)
     arc(x_saturn, y_saturn, size_saturn*1.5, size_saturn/3, -QUARTER_PI, PI+QUARTER_PI)
     angle_saturn += (PI/10585)*speed
+
+def mouseClicked():
+    global a
+    if mouseButton == RIGHT:
+        a = a * -1

@@ -10,6 +10,7 @@ size_mars = displayWidth/155
 size_jupiter = displayWidth/100
 size_saturn = displayWidth/110
 a = -1
+b = -1
 
 # Vektorenpunkte der Himmelskörper bestimmen
 v_sonne = PVector(displayWidth/2, displayHeight/2)
@@ -49,18 +50,6 @@ def draw():
     global angle_jupiter
     global angle_saturn    
     
-    #Umlaufbahnen
-    if a == 1:
-        noFill()
-        stroke(255,60)
-        strokeWeight(displayWidth/300)
-        ellipse(v_sonne[0], v_sonne[1], radius_merkur*1.2, radius_merkur)
-        ellipse(v_sonne[0], v_sonne[1], radius_venus*1.2, radius_venus)
-        ellipse(v_sonne[0], v_sonne[1], radius_erde*1.2, radius_erde)
-        ellipse(v_sonne[0], v_sonne[1], radius_mars*1.2, radius_mars)
-        ellipse(v_sonne[0], v_sonne[1], radius_jupiter*1.2, radius_jupiter)
-        ellipse(v_sonne[0], v_sonne[1], radius_saturn*1.2, radius_saturn)    
-    
     #Positionierung
     x_merkur = v_sonne[0] + sin(angle_merkur)*(radius_merkur*1.2)
     y_merkur = v_sonne[1] + cos(angle_merkur)*radius_merkur
@@ -74,6 +63,29 @@ def draw():
     y_jupiter = v_sonne[1] + cos(angle_jupiter)*radius_jupiter
     x_saturn = v_sonne[0] + sin(angle_saturn)*(radius_saturn*1.2)
     y_saturn = v_sonne[1] + cos(angle_saturn)*radius_saturn
+    
+    #Umlaufbahnen
+    if a == 1:
+        noFill()
+        stroke(255,60)
+        strokeWeight(displayWidth/300)
+        ellipse(v_sonne[0], v_sonne[1], radius_merkur*1.2, radius_merkur)
+        ellipse(v_sonne[0], v_sonne[1], radius_venus*1.2, radius_venus)
+        ellipse(v_sonne[0], v_sonne[1], radius_erde*1.2, radius_erde)
+        ellipse(v_sonne[0], v_sonne[1], radius_mars*1.2, radius_mars)
+        ellipse(v_sonne[0], v_sonne[1], radius_jupiter*1.2, radius_jupiter)
+        ellipse(v_sonne[0], v_sonne[1], radius_saturn*1.2, radius_saturn)
+    
+    #Planetennamen
+    if b == 1:
+        fill(255)
+        textSize(displayWidth/100)
+        text("Merkur", x_merkur-40, y_merkur+40)
+        text("Venus", x_venus-35, y_venus+40)
+        text("Erde", x_erde-25, y_erde+40)
+        text("Mars", x_mars-30, y_mars+40)
+        text("Jupiter", x_jupiter-35, y_jupiter+50)
+        text("Saturn", x_saturn-40, y_saturn+40)
    
     #Sonne
     stroke(240,120,50)
@@ -122,5 +134,9 @@ def draw():
 
 def mouseClicked():
     global a
+    global b
     if mouseButton == RIGHT:
         a = a * -1
+    if mouseButton == LEFT:
+        b = b * -1
+    

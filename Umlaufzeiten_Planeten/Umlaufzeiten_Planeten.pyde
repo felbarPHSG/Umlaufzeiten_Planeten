@@ -131,6 +131,34 @@ def draw():
     strokeWeight(size_saturn/4)
     arc(x_saturn, y_saturn, size_saturn*1.5, size_saturn/3, -QUARTER_PI, PI+QUARTER_PI)
     angle_saturn += (PI/10585)*speed
+    
+    #Umlaufbahnen ein-/ausschalten
+    if a == 1:
+        fill(255)
+        textSize(displayWidth/90)
+        text("Umlaufbahnen ein", displayWidth*0.86, displayHeight*0.24)
+        stroke(255,59,119)
+        strokeWeight(5)
+        line(displayWidth*0.86, displayHeight*0.25, displayWidth*0.96, displayHeight*0.25)
+
+    elif a == -1:
+        fill(255)
+        textSize(displayWidth/90)
+        text("Umlaufbahnen aus", displayWidth*0.86, displayHeight*0.24)
+        
+    #Planetennamen ein-/ausschalten
+    if b == 1:
+        fill(255)
+        textSize(displayWidth/90)
+        text("Planetennamen ein", displayWidth*0.86, displayHeight*0.14)
+        stroke(255,59,119)
+        strokeWeight(5)
+        line(displayWidth*0.86, displayHeight*0.15, displayWidth*0.962, displayHeight*0.15)
+    
+    elif b == -1:
+        fill(255)
+        textSize(displayWidth/90)
+        text("Planetennamen aus", displayWidth*0.86, displayHeight*0.14)
 
 def mouseClicked():
     global a

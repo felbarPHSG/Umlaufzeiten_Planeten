@@ -11,6 +11,7 @@ size_jupiter = displayWidth/100
 size_saturn = displayWidth/110
 a = -1
 b = -1
+counter_merkur = 0
 
 # Vektorenpunkte der Himmelskörper bestimmen
 v_sonne = PVector(displayWidth/2, displayHeight/2)
@@ -48,7 +49,8 @@ def draw():
     global angle_erde
     global angle_mars
     global angle_jupiter
-    global angle_saturn    
+    global angle_saturn   
+    global counter_merkur 
     
     #Positionierung
     x_merkur = v_sonne[0] + sin(angle_merkur)*(radius_merkur*1.2)
@@ -99,6 +101,9 @@ def draw():
     fill(115,63,18)
     ellipse(x_merkur, y_merkur, size_merkur, size_merkur)
     angle_merkur += (PI/88)*speed
+    if angle_merkur > 2*PI:
+        counter_merkur += 1
+        angle_merkur = 0
     
     #Venus
     strokeWeight(size_venus/6)
@@ -159,6 +164,10 @@ def draw():
         fill(255)
         textSize(displayWidth/90)
         text("Planetennamen aus", displayWidth*0.86, displayHeight*0.14)
+        
+    #Umrundungen
+    textSize(displayWidth/100)
+    text("Merkur: " + str(counter_merkur), displayWidth*0.05, displayHeight*0.3)
 
 def mouseClicked():
     global a

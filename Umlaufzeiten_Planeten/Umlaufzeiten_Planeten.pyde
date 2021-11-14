@@ -12,6 +12,11 @@ size_saturn = displayWidth/110
 a = -1
 b = -1
 counter_merkur = 0
+counter_venus = 0
+counter_erde = 0
+counter_mars = 0
+counter_jupiter = 0
+counter_saturn = 0
 
 # Vektorenpunkte der Himmelskörper bestimmen
 v_sonne = PVector(displayWidth/2, displayHeight/2)
@@ -51,6 +56,11 @@ def draw():
     global angle_jupiter
     global angle_saturn   
     global counter_merkur 
+    global counter_venus
+    global counter_erde
+    global counter_mars
+    global counter_jupiter
+    global counter_saturn
     
     #Positionierung
     x_merkur = v_sonne[0] + sin(angle_merkur)*(radius_merkur*1.2)
@@ -110,24 +120,36 @@ def draw():
     fill(191,112,42)
     ellipse(x_venus, y_venus, size_venus, size_venus)
     angle_venus += (PI/225)*speed
+    if angle_venus > 2*PI:
+        counter_venus += 1
+        angle_venus = 0
     
     #Erde
     strokeWeight(size_erde/6)
     fill(44,108,191)
     ellipse(x_erde, y_erde, size_erde, size_erde)
     angle_erde += (PI/365)*speed 
+    if angle_erde > 2*PI:
+        counter_erde += 1
+        angle_erde = 0
         
     #Mars
     strokeWeight(size_mars/6)
     fill(191,69,57)
     ellipse(x_mars, y_mars, size_mars, size_mars)
     angle_mars += (PI/687)*speed
+    if angle_mars > 2*PI:
+        counter_mars += 1
+        angle_mars = 0
     
     #Jupiter
     strokeWeight(size_jupiter/6)
     fill(140,128,112)
     ellipse(x_jupiter, y_jupiter, size_jupiter, size_jupiter)
     angle_jupiter += (PI/4330)*speed
+    if angle_jupiter > 2*PI:
+        counter_jupiter += 1
+        angle_jupiter = 0
     
     #Saturn
     strokeWeight(size_saturn/6)
@@ -136,6 +158,9 @@ def draw():
     strokeWeight(size_saturn/4)
     arc(x_saturn, y_saturn, size_saturn*1.5, size_saturn/3, -QUARTER_PI, PI+QUARTER_PI)
     angle_saturn += (PI/10585)*speed
+    if angle_saturn > 2*PI:
+        counter_saturn += 1
+        angle_saturn = 0    
     
     #Umlaufbahnen ein-/ausschalten
     if a == 1:
@@ -166,8 +191,24 @@ def draw():
         text("Planetennamen aus", displayWidth*0.86, displayHeight*0.14)
         
     #Umrundungen
+    textSize(displayWidth/70)
+    text("Umrundungen", displayWidth*0.03, displayHeight*0.09)
+    stroke(255)
+    strokeWeight(5)
+    line(displayWidth*0.03, displayHeight*0.1, displayWidth*0.13, displayHeight*0.1)
     textSize(displayWidth/100)
-    text("Merkur: " + str(counter_merkur), displayWidth*0.05, displayHeight*0.3)
+    text("Merkur: ", displayWidth*0.03, displayHeight*0.15)
+    text(str(counter_merkur), displayWidth*0.1, displayHeight*0.15)
+    text("Venus: ", displayWidth*0.03, displayHeight*0.2)
+    text(str(counter_venus), displayWidth*0.1, displayHeight*0.2)
+    text("Erde: ", displayWidth*0.03, displayHeight*0.25)
+    text(str(counter_erde), displayWidth*0.1, displayHeight*0.25)
+    text("Mars: ", displayWidth*0.03, displayHeight*0.3)
+    text(str(counter_mars), displayWidth*0.1, displayHeight*0.3)
+    text("Jupiter: ", displayWidth*0.03, displayHeight*0.35)
+    text(str(counter_jupiter), displayWidth*0.1, displayHeight*0.35)
+    text("Saturn: ", displayWidth*0.03, displayHeight*0.4)
+    text(str(counter_saturn), displayWidth*0.1, displayHeight*0.4)
 
 def mouseClicked():
     global a

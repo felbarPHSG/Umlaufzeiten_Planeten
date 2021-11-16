@@ -222,6 +222,16 @@ def draw():
     textSize(displayWidth/120)
     text("Press 'X' For Reset", displayWidth*0.03, displayHeight*0.45)
     
+    # Counter Reset
+    if keyPressed:
+        if key == "x" or key == "X":
+            counter_merkur = 0
+            counter_venus = 0
+            counter_erde = 0
+            counter_mars = 0
+            counter_jupiter = 0
+            counter_saturn = 0
+    
     # Pfeil
     fill(255)
     stroke(255)

@@ -176,6 +176,10 @@ def draw():
         textSize(displayWidth/90)
         text("Umlaufbahnen aus", displayWidth*0.86, displayHeight*0.24)
         
+    fill(255,59,119)
+    textSize(displayWidth/150)
+    text("Press Left Mouse Button", displayWidth*0.86, displayHeight*0.17)
+        
     #Planetennamen ein-/ausschalten
     if b == 1:
         fill(255)
@@ -190,7 +194,12 @@ def draw():
         textSize(displayWidth/90)
         text("Planetennamen aus", displayWidth*0.86, displayHeight*0.14)
         
+    fill(255,59,119)
+    textSize(displayWidth/150)
+    text("Press Right Mouse Button", displayWidth*0.86, displayHeight*0.27)
+        
     #Umrundungen
+    fill(255)
     textSize(displayWidth/70)
     text("Umrundungen", displayWidth*0.03, displayHeight*0.09)
     stroke(255)
@@ -209,6 +218,21 @@ def draw():
     text(str(counter_jupiter), displayWidth*0.1, displayHeight*0.35)
     text("Saturn: ", displayWidth*0.03, displayHeight*0.4)
     text(str(counter_saturn), displayWidth*0.1, displayHeight*0.4)
+    fill(255,59,119)
+    textSize(displayWidth/120)
+    text("Press 'X' For Reset", displayWidth*0.03, displayHeight*0.45)
+    
+    # Pfeil
+    fill(255)
+    stroke(255)
+    line(displayWidth*0.86, displayHeight*0.85, displayWidth*0.96, displayHeight*0.85)
+    line(displayWidth*0.86, displayHeight*0.85, displayWidth*0.87, displayHeight*0.86)
+    line(displayWidth*0.86, displayHeight*0.85, displayWidth*0.87, displayHeight*0.84)
+    line(displayWidth*0.96, displayHeight*0.85, displayWidth*0.95, displayHeight*0.86)
+    line(displayWidth*0.96, displayHeight*0.85, displayWidth*0.95, displayHeight*0.84)
+    textSize(displayWidth/130)
+    text("slow", displayWidth*0.86, displayHeight*0.88)
+    text("fast", displayWidth*0.95, displayHeight*0.88)
 
 def mouseClicked():
     global a
@@ -217,4 +241,3 @@ def mouseClicked():
         a = a * -1
     if mouseButton == LEFT:
         b = b * -1
-    

@@ -1,6 +1,10 @@
 # globale Variablen
+add_library('minim')
 a = -1
 b = -1
+r = 0
+i = 0
+presstime = 0
 counter_merkur = 0
 counter_venus = 0
 counter_erde = 0
@@ -77,6 +81,8 @@ def setup():
     global img_mars
     global img_jupiter
     global img_saturn
+    global img_rakete
+    global countdown
     fullScreen()
     ellipseMode(RADIUS)
     frameRate(120)
@@ -86,6 +92,9 @@ def setup():
     img_mars = loadImage("Mars.png")
     img_jupiter = loadImage("Jupiter.png")
     img_saturn = loadImage("Saturn.png")
+    img_rakete = loadImage("Rakete.png")
+    minim = Minim(this)
+    countdown = minim.loadFile("Countdown.mp3")
 
 def draw():
     global speed
@@ -108,6 +117,7 @@ def draw():
     counter_reset()
     pfeil()
     exitbutton()
+    rakete()
         
 def positionierung():
     global x_merkur
@@ -327,3 +337,21 @@ def exitbutton():
     line(width/1.005, height*0.01, width/1.02, height*0.035)
     if mouseX in range(width*39/40, width) and mouseY in range(0, width*1/40) and mousePressed == True:
         exit()
+
+def rakete():
+    global i
+    global r
+    global presstime
+    image(img_rakete, width/5, i+height*1.2, width/20, width/20)
+    if keyPressed:
+        if key == "1":
+            r = 1
+            presstime = millis()
+            countdown.rewind()
+    if r == 1:
+        countdown.play()
+        if presstime + 10000 <= millis():
+            i -= height/150
+        if i <= -height*1.2:
+            i = 0
+            r = 0

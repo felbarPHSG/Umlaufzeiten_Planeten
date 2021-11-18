@@ -40,12 +40,12 @@ def settings():
     
     fullScreen()
     size_sonne = width/50
-    size_merkur = width/180
-    size_venus = width/130
-    size_erde = width/130
-    size_mars = width/155
-    size_jupiter = width/100
-    size_saturn = width/110
+    size_merkur = width/120
+    size_venus = width/70
+    size_erde = width/70
+    size_mars = width/90
+    size_jupiter = width/50
+    size_saturn = width/50
 
     # Vektorenpunkte der Himmelskörper bestimmen
     v_sonne = PVector(width/2, height/2)
@@ -71,11 +71,22 @@ def settings():
     radius_saturn = dist(v_sonne[0], v_sonne[1], v_saturn[0], v_saturn[1])
 
 def setup():
+    global img_merkur
+    global img_venus
+    global img_erde
+    global img_mars
+    global img_jupiter
+    global img_saturn
     fullScreen()
     ellipseMode(RADIUS)
     frameRate(120)
-    pfeil()
-    
+    img_merkur = loadImage("Merkur.png")
+    img_venus = loadImage("Venus.png")
+    img_erde = loadImage("Erde.png")
+    img_mars = loadImage("Mars.png")
+    img_jupiter = loadImage("Jupiter.png")
+    img_saturn = loadImage("Saturn.png")
+
 def draw():
     global speed
     background(10,10,45)
@@ -141,12 +152,12 @@ def planetennamen():
         fill(255)
         textSize(width/100)
         textAlign(CENTER)
-        text("Merkur", x_merkur, y_merkur+size_merkur+height/40)
-        text("Venus", x_venus, y_venus+size_venus+height/40)
-        text("Erde", x_erde, y_erde+size_erde+height/40)
-        text("Mars", x_mars, y_mars+size_mars+height/40)
-        text("Jupiter", x_jupiter, y_jupiter+size_jupiter+height/40)
-        text("Saturn", x_saturn, y_saturn+size_saturn+height/40)
+        text("Merkur", x_merkur, y_merkur+size_merkur*2)
+        text("Venus", x_venus, y_venus+size_venus*1.3)
+        text("Erde", x_erde, y_erde+size_erde*1.4)
+        text("Mars", x_mars, y_mars+size_mars*1.6)
+        text("Jupiter", x_jupiter, y_jupiter+size_jupiter*1.1)
+        text("Saturn", x_saturn, y_saturn+size_saturn*1.1)
         
 def sonne():
     stroke(240,120,50)
@@ -157,10 +168,8 @@ def sonne():
 def merkur():
     global angle_merkur
     global counter_merkur
-    stroke(255)
-    strokeWeight(size_merkur/6)
-    fill(115,63,18)
-    ellipse(x_merkur, y_merkur, size_merkur, size_merkur)
+    imageMode(CENTER)
+    image(img_merkur, x_merkur, y_merkur, size_merkur, size_merkur)
     angle_merkur += (PI/88)*speed
     if angle_merkur > 2*PI:
         counter_merkur += 1
@@ -169,10 +178,7 @@ def merkur():
 def venus():
     global angle_venus
     global counter_venus
-    stroke(255)
-    strokeWeight(size_venus/6)
-    fill(191,112,42)
-    ellipse(x_venus, y_venus, size_venus, size_venus)
+    image(img_venus, x_venus, y_venus, size_venus, size_venus)
     angle_venus += (PI/225)*speed
     if angle_venus > 2*PI:
         counter_venus += 1
@@ -181,10 +187,7 @@ def venus():
 def erde():
     global angle_erde
     global counter_erde
-    stroke(255)
-    strokeWeight(size_erde/6)
-    fill(44,108,191)
-    ellipse(x_erde, y_erde, size_erde, size_erde)
+    image(img_erde, x_erde, y_erde, size_erde, size_erde)
     angle_erde += (PI/365)*speed 
     if angle_erde > 2*PI:
         counter_erde += 1
@@ -193,10 +196,7 @@ def erde():
 def mars():
     global angle_mars
     global counter_mars
-    stroke(255)
-    strokeWeight(size_mars/6)
-    fill(191,69,57)
-    ellipse(x_mars, y_mars, size_mars, size_mars)
+    image(img_mars, x_mars, y_mars, size_mars, size_mars)
     angle_mars += (PI/687)*speed
     if angle_mars > 2*PI:
         counter_mars += 1
@@ -205,10 +205,7 @@ def mars():
 def jupiter():
     global angle_jupiter
     global counter_jupiter
-    stroke(255)
-    strokeWeight(size_jupiter/6)
-    fill(140,128,112)
-    ellipse(x_jupiter, y_jupiter, size_jupiter, size_jupiter)
+    image(img_jupiter, x_jupiter, y_jupiter, size_jupiter, size_jupiter)
     angle_jupiter += (PI/4330)*speed
     if angle_jupiter > 2*PI:
         counter_jupiter += 1
@@ -217,12 +214,7 @@ def jupiter():
 def saturn():
     global angle_saturn
     global counter_saturn
-    stroke(255)
-    strokeWeight(size_saturn/6)
-    fill(241,216,146)
-    ellipse(x_saturn, y_saturn, size_saturn, size_saturn)
-    strokeWeight(size_saturn/4)
-    arc(x_saturn, y_saturn, size_saturn*1.5, size_saturn/3, -QUARTER_PI, PI+QUARTER_PI)
+    image(img_saturn, x_saturn, y_saturn, size_saturn, size_saturn)
     angle_saturn += (PI/10585)*speed
     if angle_saturn > 2*PI:
         counter_saturn += 1

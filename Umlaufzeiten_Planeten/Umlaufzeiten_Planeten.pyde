@@ -355,7 +355,7 @@ def rakete():
     global presstime
     image(img_rakete, width/5, offset_rakete+height*1.2, width/20, width/20)
     if keyPressed:
-        if key == "1":
+        if key == "1" and start_rakete == 0:
             start_rakete = 1
             presstime = millis()
             countdown.rewind()
@@ -375,7 +375,7 @@ def verfolgung():
     image(img_astronaut, offset_verfolgung-width/20, height/2, width/40, width/40)
     image(img_ufo, offset_verfolgung-width/4, height/2, width/40, width/40)
     if keyPressed:
-        if key == "2":
+        if key == "2" and start_verfolgung == 0:
             start_verfolgung = 1    
             presstime2 = millis()
             laser.rewind()

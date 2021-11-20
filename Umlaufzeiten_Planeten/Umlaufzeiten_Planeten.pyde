@@ -2,9 +2,13 @@
 add_library('minim')
 a = -1
 b = -1
-r = 0
-i = 0
+start_rakete = 0
+offset_rakete = 0
+start_verfolgung = 0
+offset_verfolgung = 0
+offset_laser = 0
 presstime = 0
+presstime2 = 0
 counter_merkur = 0
 counter_venus = 0
 counter_erde = 0
@@ -82,7 +86,10 @@ def setup():
     global img_jupiter
     global img_saturn
     global img_rakete
+    global img_astronaut
+    global img_ufo
     global countdown
+    global laser
     fullScreen()
     ellipseMode(RADIUS)
     frameRate(120)
@@ -93,8 +100,11 @@ def setup():
     img_jupiter = loadImage("Jupiter.png")
     img_saturn = loadImage("Saturn.png")
     img_rakete = loadImage("Rakete.png")
+    img_astronaut = loadImage("Astronaut.png")
+    img_ufo = loadImage("Ufo.png")
     minim = Minim(this)
     countdown = minim.loadFile("Countdown.mp3")
+    laser = minim.loadFile("Laser.mp3")
 
 def draw():
     global speed
@@ -118,6 +128,7 @@ def draw():
     pfeil()
     exitbutton()
     rakete()
+    verfolgung()
         
 def positionierung():
     global x_merkur
@@ -339,19 +350,46 @@ def exitbutton():
         exit()
 
 def rakete():
-    global i
-    global r
+    global offset_rakete
+    global start_rakete
     global presstime
-    image(img_rakete, width/5, i+height*1.2, width/20, width/20)
+    image(img_rakete, width/5, offset_rakete+height*1.2, width/20, width/20)
     if keyPressed:
         if key == "1":
-            r = 1
+            start_rakete = 1
             presstime = millis()
             countdown.rewind()
-    if r == 1:
+    if start_rakete == 1:
         countdown.play()
         if presstime + 10000 <= millis():
-            i -= height/150
-        if i <= -height*1.2:
-            i = 0
-            r = 0
+            offset_rakete -= height/150
+        if offset_rakete <= -height*1.2:
+            offset_rakete = 0
+            start_rakete = 0
+
+def verfolgung():
+    global offset_laser
+    global start_verfolgung
+    global offset_verfolgung
+    global presstime2
+    image(img_astronaut, offset_verfolgung-width/20, height/2, width/40, width/40)
+    image(img_ufo, offset_verfolgung-width/4, height/2, width/40, width/40)
+    if keyPressed:
+        if key == "2":
+            start_verfolgung = 1    
+            presstime2 = millis()
+            laser.rewind()
+    if start_verfolgung == 1:
+        offset_verfolgung += width/300
+        if presstime2 + 5000 <= millis():
+            laser.play()
+            offset_laser += width/299
+            stroke(255,0,0)
+            line(offset_verfolgung-width/4+offset_laser, height/2, offset_verfolgung-width/4.5+offset_laser, height/2)
+        if offset_verfolgung-width/4.5+offset_laser >= offset_verfolgung-width/20:
+            fill(255,0,0)
+            arc(offset_verfolgung-width/19.5, height/2, width/300, width/300, 0, 2*PI)
+    if offset_verfolgung >= width+width/4:
+        offset_verfolgung = 0
+        start_verfolgung = 0
+        offset_laser = 0

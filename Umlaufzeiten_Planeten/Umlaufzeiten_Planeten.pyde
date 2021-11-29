@@ -15,6 +15,12 @@ counter_erde = 0
 counter_mars = 0
 counter_jupiter = 0
 counter_saturn = 0
+angle_merkur = 0
+angle_venus = 0
+angle_erde = 0
+angle_mars = 0
+angle_jupiter = 0
+angle_saturn = 0
 
 def settings():
     global size_sonne
@@ -31,17 +37,11 @@ def settings():
     global v_mars
     global v_jupiter
     global v_saturn
-    global angle_merkur
     global radius_merkur
-    global angle_venus
     global radius_venus
-    global angle_erde
     global radius_erde
-    global angle_mars
     global radius_mars
-    global angle_jupiter
     global radius_jupiter
-    global angle_saturn
     global radius_saturn
     global width
     global height
@@ -64,18 +64,12 @@ def settings():
     v_jupiter = PVector(width/3.2, height/3.2)
     v_saturn = PVector(width/3.65, height/3.65)
 
-    # Winkel zwischen Vektorenpunkten bestimmen + Radius
-    angle_merkur = PVector.angleBetween(v_sonne, v_merkur)
+    # Radius zwischen Vektorenpunkten bestimmen
     radius_merkur = dist(v_sonne[0], v_sonne[1], v_merkur[0], v_merkur[1])
-    angle_venus = PVector.angleBetween(v_sonne, v_venus)
     radius_venus = dist(v_sonne[0], v_sonne[1], v_venus[0], v_venus[1])
-    angle_erde = PVector.angleBetween(v_sonne, v_erde)
     radius_erde = dist(v_sonne[0], v_sonne[1], v_erde[0], v_erde[1])
-    angle_mars = PVector.angleBetween(v_sonne, v_mars)
     radius_mars = dist(v_sonne[0], v_sonne[1], v_mars[0], v_mars[1])
-    angle_jupiter = PVector.angleBetween(v_sonne, v_jupiter)
     radius_jupiter = dist(v_sonne[0], v_sonne[1], v_jupiter[0], v_jupiter[1])
-    angle_saturn = PVector.angleBetween(v_sonne, v_saturn)
     radius_saturn = dist(v_sonne[0], v_sonne[1], v_saturn[0], v_saturn[1])
 
 def setup():

@@ -1,5 +1,5 @@
 # globale Variablen
-add_library('minim')
+add_library('minim') # Abspielen von Audiodateien mit Hilfe der "Minim" Library
 a = -1
 b = -1
 start_rakete = 0
@@ -9,8 +9,8 @@ offset_verfolgung = 0
 offset_laser = 0
 presstime = 0
 presstime2 = 0
-counter_merkur = 0
 counter_venus = 0
+counter_merkur = 0
 counter_erde = 0
 counter_mars = 0
 counter_jupiter = 0
@@ -21,58 +21,9 @@ angle_erde = 0
 angle_mars = 0
 angle_jupiter = 0
 angle_saturn = 0
-
-def settings():
-    global size_sonne
-    global size_merkur
-    global size_venus
-    global size_erde
-    global size_mars
-    global size_jupiter
-    global size_saturn
-    global v_sonne
-    global v_merkur
-    global v_venus
-    global v_erde
-    global v_mars
-    global v_jupiter
-    global v_saturn
-    global radius_merkur
-    global radius_venus
-    global radius_erde
-    global radius_mars
-    global radius_jupiter
-    global radius_saturn
-    global width
-    global height
     
-    fullScreen()
-    size_sonne = width/50
-    size_merkur = width/120
-    size_venus = width/70
-    size_erde = width/70
-    size_mars = width/90
-    size_jupiter = width/50
-    size_saturn = width/50
-
-    # Vektorenpunkte der Himmelskörper bestimmen
-    v_sonne = PVector(width/2, height/2)
-    v_merkur = PVector(width/2.2, height/2.2)
-    v_venus = PVector(width/2.4, height/2.4)
-    v_erde = PVector(width/2.6, height/2.6)
-    v_mars = PVector(width/2.9, height/2.9)
-    v_jupiter = PVector(width/3.2, height/3.2)
-    v_saturn = PVector(width/3.65, height/3.65)
-
-    # Radius zwischen Vektorenpunkten bestimmen
-    radius_merkur = dist(v_sonne[0], v_sonne[1], v_merkur[0], v_merkur[1])
-    radius_venus = dist(v_sonne[0], v_sonne[1], v_venus[0], v_venus[1])
-    radius_erde = dist(v_sonne[0], v_sonne[1], v_erde[0], v_erde[1])
-    radius_mars = dist(v_sonne[0], v_sonne[1], v_mars[0], v_mars[1])
-    radius_jupiter = dist(v_sonne[0], v_sonne[1], v_jupiter[0], v_jupiter[1])
-    radius_saturn = dist(v_sonne[0], v_sonne[1], v_saturn[0], v_saturn[1])
-
 def setup():
+    fullScreen()
     global img_merkur
     global img_venus
     global img_erde
@@ -87,6 +38,7 @@ def setup():
     fullScreen()
     ellipseMode(RADIUS)
     frameRate(120)
+    # Bilder für Planeten laden
     img_merkur = loadImage("Merkur.png")
     img_venus = loadImage("Venus.png")
     img_erde = loadImage("Erde.png")
@@ -102,10 +54,71 @@ def setup():
 
 def draw():
     global speed
+    global v_dict
+    global merkur_dict
+    global venus_dict
+    global erde_dict
+    global mars_dict
+    global jupiter_dict
+    global saturn_dict
     background(10,10,45)
-    speed = pow(mouseX/(0.5*width), 2)*5
+    speed = pow(mouseX/(0.5*width), 2)*4 # Geschwindigkeit nimmt auf der X-Achse nach rechts zu, nach links ab
+
+    # Dictionary für Vektorpunkte der Himmelskörper, um nachher den Abstand zwischen Planeten und Sonne zu berechnen
+    v_dict = {
+              'sonne' : PVector(width/2, height/2),
+              'merkur' : PVector(width/2.2, height/2.2),
+              'venus' : PVector(width/2.4, height/2.4),
+              'erde' : PVector(width/2.6, height/2.6),
+              'mars' : PVector(width/2.9, height/2.9),
+              'jupiter' : PVector(width/3.2, height/3.2),
+              'saturn' : PVector(width/3.65, height/3.65)
+              }
+
+    #Dictionaries für Planeten: Grösse, Abstand zur Sonne, Positionen x und y 
+    merkur_dict = {
+                   'size' : width/120,
+                   'radius' : dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['merkur'][0], v_dict['merkur'][1]),
+                   'x' : v_dict['sonne'][0] + sin(angle_merkur)*(dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['merkur'][0], v_dict['merkur'][1])*1.2),
+                   'y' : v_dict['sonne'][1] + cos(angle_merkur)*dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['merkur'][0], v_dict['merkur'][1]),
+                   }
     
-    positionierung()
+    venus_dict = {
+                   'size' : width/70,
+                   'radius' : dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['venus'][0], v_dict['venus'][1]),
+                   'x' : v_dict['sonne'][0] + sin(angle_venus)*(dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['venus'][0], v_dict['venus'][1])*1.2),
+                   'y' : v_dict['sonne'][1] + cos(angle_venus)*dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['venus'][0], v_dict['venus'][1])
+                   }
+    
+    erde_dict = {
+                 'size' : width/70,
+                 'radius' : dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['erde'][0], v_dict['erde'][1]),
+                 'x' : v_dict['sonne'][0] + sin(angle_erde)*(dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['erde'][0], v_dict['erde'][1])*1.2),
+                 'y' : v_dict['sonne'][1] + cos(angle_erde)*dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['erde'][0], v_dict['erde'][1])
+                 }
+
+    mars_dict = {
+                 'size' : width/90,
+                 'radius' : dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['mars'][0], v_dict['mars'][1]),
+                 'x' : v_dict['sonne'][0] + sin(angle_mars)*(dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['mars'][0], v_dict['mars'][1])*1.2),
+                 'y' : v_dict['sonne'][1] + cos(angle_mars)*dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['mars'][0], v_dict['mars'][1])
+                 }
+    
+    jupiter_dict = {
+                 'size' : width/50,
+                 'radius' : dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['jupiter'][0], v_dict['jupiter'][1]),
+                 'x' : v_dict['sonne'][0] + sin(angle_jupiter)*(dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['jupiter'][0], v_dict['jupiter'][1])*1.2),
+                 'y' : v_dict['sonne'][1] + cos(angle_jupiter)*dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['jupiter'][0], v_dict['jupiter'][1])
+                 }
+    
+    saturn_dict = {
+                 'size' : width/50,
+                 'radius' : dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['saturn'][0], v_dict['saturn'][1]),
+                 'x' : v_dict['sonne'][0] + sin(angle_saturn)*(dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['saturn'][0], v_dict['saturn'][1])*1.2),
+                 'y' : v_dict['sonne'][1] + cos(angle_saturn)*dist(v_dict['sonne'][0], v_dict['sonne'][1], v_dict['saturn'][0], v_dict['saturn'][1])
+                 }
+    
+    # Abrufen der unten definierten Funktionen
     umlaufbahnen()
     planetennamen()
     sonne()
@@ -124,76 +137,51 @@ def draw():
     rakete()
     verfolgung()
         
-def positionierung():
-    global x_merkur
-    global y_merkur
-    global x_venus
-    global y_venus
-    global x_erde
-    global y_erde
-    global x_mars
-    global y_mars
-    global x_jupiter
-    global y_jupiter
-    global x_saturn
-    global y_saturn
-    x_merkur = v_sonne[0] + sin(angle_merkur)*(radius_merkur*1.2)
-    y_merkur = v_sonne[1] + cos(angle_merkur)*radius_merkur
-    x_venus = v_sonne[0] + sin(angle_venus)*(radius_venus*1.2)
-    y_venus = v_sonne[1] + cos(angle_venus)*radius_venus
-    x_erde = v_sonne[0] + sin(angle_erde)*(radius_erde*1.2)
-    y_erde = v_sonne[1] + cos(angle_erde)*radius_erde
-    x_mars = v_sonne[0] + sin(angle_mars)*(radius_mars*1.2)
-    y_mars = v_sonne[1] + cos(angle_mars)*radius_mars
-    x_jupiter = v_sonne[0] + sin(angle_jupiter)*(radius_jupiter*1.2)
-    y_jupiter = v_sonne[1] + cos(angle_jupiter)*radius_jupiter
-    x_saturn = v_sonne[0] + sin(angle_saturn)*(radius_saturn*1.2)
-    y_saturn = v_sonne[1] + cos(angle_saturn)*radius_saturn
-        
-def umlaufbahnen():
+def umlaufbahnen(): # Wenn die rechte Maustaste gedrückt wird, werden die Planetenbahnen ein- oder ausgeblendet
     if a == 1:
         noFill()
         stroke(255,60)
         strokeWeight(width/300)
-        ellipse(v_sonne[0], v_sonne[1], radius_merkur*1.2, radius_merkur)
-        ellipse(v_sonne[0], v_sonne[1], radius_venus*1.2, radius_venus)
-        ellipse(v_sonne[0], v_sonne[1], radius_erde*1.2, radius_erde)
-        ellipse(v_sonne[0], v_sonne[1], radius_mars*1.2, radius_mars)
-        ellipse(v_sonne[0], v_sonne[1], radius_jupiter*1.2, radius_jupiter)
-        ellipse(v_sonne[0], v_sonne[1], radius_saturn*1.2, radius_saturn)
+        ellipse(v_dict['sonne'][0], v_dict['sonne'][1], merkur_dict['radius']*1.2, merkur_dict['radius'])
+        ellipse(v_dict['sonne'][0], v_dict['sonne'][1], venus_dict['radius']*1.2, venus_dict['radius'])
+        ellipse(v_dict['sonne'][0], v_dict['sonne'][1], erde_dict['radius']*1.2, erde_dict['radius'])
+        ellipse(v_dict['sonne'][0], v_dict['sonne'][1], mars_dict['radius']*1.2, mars_dict['radius'])
+        ellipse(v_dict['sonne'][0], v_dict['sonne'][1], jupiter_dict['radius']*1.2, jupiter_dict['radius'])
+        ellipse(v_dict['sonne'][0], v_dict['sonne'][1], saturn_dict['radius']*1.2, saturn_dict['radius'])
         
-def planetennamen():
+def planetennamen(): # Wenn die linke Maustaste gedrückt wird, werden die Planetennamen ein- oder ausgeblendet
     if b == 1:
         fill(255)
         textSize(width/100)
         textAlign(CENTER)
-        text("Merkur", x_merkur, y_merkur+size_merkur*2)
-        text("Venus", x_venus, y_venus+size_venus*1.3)
-        text("Erde", x_erde, y_erde+size_erde*1.4)
-        text("Mars", x_mars, y_mars+size_mars*1.6)
-        text("Jupiter", x_jupiter, y_jupiter+size_jupiter*1.1)
-        text("Saturn", x_saturn, y_saturn+size_saturn*1.1)
+        text("Merkur", merkur_dict['x'], merkur_dict['y']+merkur_dict['size']*2)
+        text("Venus", venus_dict['x'], venus_dict['y']+venus_dict['size']*1.3)
+        text("Erde", erde_dict['x'], erde_dict['y']+erde_dict['size']*1.4)
+        text("Mars", mars_dict['x'], mars_dict['y']+mars_dict['size']*1.6)
+        text("Jupiter", jupiter_dict['x'], jupiter_dict['y']+jupiter_dict['size']*1.1)
+        text("Saturn", saturn_dict['x'], saturn_dict['y']+saturn_dict['size']*1.1)
         
 def sonne():
+    size_sonne = width/50
     stroke(240,120,50)
     strokeWeight(size_sonne/8)
     fill(255,230,5)
-    ellipse(v_sonne[0], v_sonne[1], size_sonne, size_sonne)
+    ellipse(v_dict['sonne'][0], v_dict['sonne'][1], size_sonne, size_sonne)
     
 def merkur():
     global angle_merkur
     global counter_merkur
     imageMode(CENTER)
-    image(img_merkur, x_merkur, y_merkur, size_merkur, size_merkur)
+    image(img_merkur, merkur_dict['x'], merkur_dict['y'], merkur_dict['size'], merkur_dict['size'])
     angle_merkur += (PI/88)*speed
-    if angle_merkur > 2*PI:
+    if angle_merkur > 2*PI: # Wenn der Planet die Sonne einmal umkreist hat (2*PI), wird der Counter um eins erhöht
         counter_merkur += 1
         angle_merkur = 0
         
 def venus():
     global angle_venus
     global counter_venus
-    image(img_venus, x_venus, y_venus, size_venus, size_venus)
+    image(img_venus, venus_dict['x'], venus_dict['y'], venus_dict['size'], venus_dict['size'])
     angle_venus += (PI/225)*speed
     if angle_venus > 2*PI:
         counter_venus += 1
@@ -202,7 +190,7 @@ def venus():
 def erde():
     global angle_erde
     global counter_erde
-    image(img_erde, x_erde, y_erde, size_erde, size_erde)
+    image(img_erde, erde_dict['x'], erde_dict['y'], erde_dict['size'], erde_dict['size'])
     angle_erde += (PI/365)*speed 
     if angle_erde > 2*PI:
         counter_erde += 1
@@ -211,7 +199,7 @@ def erde():
 def mars():
     global angle_mars
     global counter_mars
-    image(img_mars, x_mars, y_mars, size_mars, size_mars)
+    image(img_mars, mars_dict['x'], mars_dict['y'], mars_dict['size'], mars_dict['size'])
     angle_mars += (PI/687)*speed
     if angle_mars > 2*PI:
         counter_mars += 1
@@ -220,7 +208,7 @@ def mars():
 def jupiter():
     global angle_jupiter
     global counter_jupiter
-    image(img_jupiter, x_jupiter, y_jupiter, size_jupiter, size_jupiter)
+    image(img_jupiter, jupiter_dict['x'], jupiter_dict['y'], jupiter_dict['size'], jupiter_dict['size'])
     angle_jupiter += (PI/4330)*speed
     if angle_jupiter > 2*PI:
         counter_jupiter += 1
@@ -229,7 +217,7 @@ def jupiter():
 def saturn():
     global angle_saturn
     global counter_saturn
-    image(img_saturn, x_saturn, y_saturn, size_saturn, size_saturn)
+    image(img_saturn, saturn_dict['x'], saturn_dict['y'], saturn_dict['size'], saturn_dict['size'])
     angle_saturn += (PI/10585)*speed
     if angle_saturn > 2*PI:
         counter_saturn += 1
@@ -237,7 +225,7 @@ def saturn():
         
 def ui_umlaufbahnen():
     textAlign(LEFT)
-    if a == 1:
+    if a == 1: # auf Rechtsklick ändert sich der Text von "Umlaufbahnen ein" zu "Umlaufbahnen aus" und umgekehrt
         fill(255)
         textSize(width/90)
         textAlign(LEFT)
@@ -251,11 +239,11 @@ def ui_umlaufbahnen():
         text("Umlaufbahnen aus", width*0.86, height*0.24)
     fill(255,59,119)
     textSize(width/150)
-    text("Press Left Mouse Button", width*0.86, height*0.17)
+    text("Press Right Mouse Button", width*0.86, height*0.27)
     
 def ui_planetennamen():
     textAlign(LEFT)
-    if b == 1:
+    if b == 1: # auf Linksklick ändert sich der Text von "Planetennamen ein" zu "Planetennamen aus" und umgekehrt
         fill(255)
         textSize(width/90)
         text("Planetennamen ein", width*0.86, height*0.14)
@@ -268,8 +256,9 @@ def ui_planetennamen():
         text("Planetennamen aus", width*0.86, height*0.14)
     fill(255,59,119)
     textSize(width/150)
-    text("Press Right Mouse Button", width*0.86, height*0.27)
+    text("Press Left Mouse Button", width*0.86, height*0.17)
     
+# Ansicht für Anzahl Umrundungen der Planeten
 def umrundungen():
     fill(255)
     textSize(width/70)
@@ -304,7 +293,7 @@ def counter_reset():
     global counter_jupiter
     global counter_saturn
     if keyPressed:
-        if key == "x" or key == "X":
+        if key == "x" or key == "X": # Wenn die Taste x gedrückt wird, werden alle Counter auf 0 zurückgesetzt
             counter_merkur = 0
             counter_venus = 0
             counter_erde = 0
@@ -312,7 +301,7 @@ def counter_reset():
             counter_jupiter = 0
             counter_saturn = 0
             
-def pfeil():
+def pfeil(): # Pfeil, der anzeigen soll, wie die Geschwindigkeit über die X-Achse variiert werden kann
     fill(255)
     stroke(255)
     line(width*0.86, height*0.85, width*0.96, height*0.85)
@@ -333,7 +322,7 @@ def mouseClicked():
     if mouseButton == LEFT:
         b = b * -1
         
-def exitbutton():
+def exitbutton(): # Wenn der Exit-Button oben rechts geklickt wird, wird das Programm geschlossen
     noStroke()
     fill(255,59,119)
     rect(width*39/40, 0, width*1/40, width*1/40)
@@ -343,7 +332,7 @@ def exitbutton():
     if mouseX in range(width*39/40, width) and mouseY in range(0, width*1/40) and mousePressed == True:
         exit()
 
-def rakete():
+def rakete(): # Easter Egg 1: Beim Drücken der Taste 1 folgt zunächst ein Countdown für 10 Sekunden. Danach steigt eine Rakete in die Höhe.
     global offset_rakete
     global start_rakete
     global presstime
@@ -356,12 +345,12 @@ def rakete():
     if start_rakete == 1:
         countdown.play()
         if presstime + 10000 <= millis():
-            offset_rakete -= height/150
+            offset_rakete -= height/225
         if offset_rakete <= -height*1.2:
             offset_rakete = 0
             start_rakete = 0
 
-def verfolgung():
+def verfolgung(): # Easter Egg 2: Beim Drücken der Taste 2 erscheint ein Astronaut, der von einem Alien verfolgt wird. Nach 2 Sekunden wird dieser vom Alien niedergeschossen.
     global offset_laser
     global start_verfolgung
     global offset_verfolgung
@@ -375,7 +364,7 @@ def verfolgung():
             laser.rewind()
     if start_verfolgung == 1:
         offset_verfolgung += width/300
-        if presstime2 + 5000 <= millis():
+        if presstime2 + 2000 <= millis():
             laser.play()
             offset_laser += width/299
             stroke(255,0,0)
